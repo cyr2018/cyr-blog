@@ -9,11 +9,22 @@ jobs:
     steps:
       - name: Checkout 🛎️
         uses: actions/checkout@v4
+# This workflow uses actions that are not certified by GitHub.
+# They are provided by a third-party and are governed by
+# separate terms of service, privacy policy, and support
+# documentation.
 
-      - name: Install and Build 🔧 # This example project is built using npm and outputs the result to the 'build' folder. Replace with the commands required to build your project, or remove this step entirely if your site is pre-built.
-        run: |
-          npm ci
-          npm run build
+# NOTE: pnpm caching support requires pnpm version >= 6.10.0
+      - uses: pnpm/action-setup@v2
+        with:
+          version: 6.32.9
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '14'
+          cache: 'pnpm'
+      - run: |
+          pnpm install
+          pnpm run build
 
       - name: Deploy 🚀
         uses: JamesIves/github-pages-deploy-action@v4
